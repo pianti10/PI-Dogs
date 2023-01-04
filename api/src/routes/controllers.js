@@ -1,64 +1,52 @@
-const axios = require('axios');
-const { Race, Temperament} = require('../db')
+const axios = require("axios");
+const { Breed, Temperament } = require("../db");
+const { API_KEY } = process.env;
 
-const getApi = async () => {
-    const dogsURL = await axios.get('https://api.thedogapi.com/v1/breeds');
-    let dogsInfo = await dogsURL.data.map((dog) => {
-        return {
-            id : dog.id,
-            name : dog.name,
-            temperament : dog.temperament,
-            weight_min : parseInt(dog.weight.imperial.split("-")[0]),
-            weight_max : parseInt(dog.weight.imperial.split("-")[1]),
-            height: dog.height.metric,
-            lifeTime : dog.life_span,
-            image : dog.image.url,
-            }
-        })
-        return dogsInfo
-    }
+const getApiInfo = async () => {
+  let api = await axios.get(
+    `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
+  );
+  let dogsInfo = await api.data.map((e) => {
+    return {
+      id: e.id,
+      name: e.name,
+      image: e.image.url,
+      breed_group: e.breed_group,
+      temperament: e.temperament,
+      life_span: e.life_span,
+      weight_min: parseInt(e.weight.metric.slice(0, 2).trim()),
+      weight_max: parseInt(e.weight.metric.slice(4).trim()),
+      height_min: parseInt(e.height.metric.slice(0, 2).trim()),
+      height_max: parseInt(e.height.metric.slice(4).trim()),
+    };
+  });
+  return dogsInfo;
+};
 
-const getDB = async () => {
-         let perroMapeado1 =  await Race.findAll({
-            include: {
-                model: Temperament,
-                atributes: ['name'],
-                through: {
-                    attributes: [],
-                }
-            }
-        })
-        perroMapeado1 = perroMapeado1.map(dog => {return {
-            id: dog.id,
-            name:dog.name,
-            weight_min: dog.weight_min,
-            weight_max: dog.weight_max,
-            lifeTime: dog.lifeTime,
-            image: dog.image,
-            createdInDb: dog.createdInDb,
-            height: `${dog.height_min} - ${dog.height_max}`,
-            temperament : dog.temperaments.map(e => {return e.name}).join(',')
-        }})
-        console.log(perroMapeado1)
-        return perroMapeado1
-        // await Dog.findAll({
-        //     include: {
-        //         model: Temperament,
-        //         atributes: ['name'],
-        //         through: {
-        //             attributes: [],
-        //         }
-        //     }
-        // })
-    }
+const getDBInfo = async () => {
+  const dogsDB = await Breed.findAll({
+    include: {
+      model: Temperament,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+  return dogsDB;
+};
 
-const getAllDogs = async () => {
-        let dbInfo = await getDB();
-        let apiInfo = await getApi();
-        let allInfo = apiInfo.concat(dbInfo);
-        return allInfo 
-    }
+const getInfoTotal = async () => {
+  const apiInfo = await getApiInfo();
+  const DBInfo = await getDBInfo();
+  const infoTotal = apiInfo.concat(DBInfo);
+  return infoTotal;
+};
 
 
 
-    module.exports = { getAllDogs };
+module.exports = {
+  getApiInfo,
+  getDBInfo,
+  getInfoTotal
+};

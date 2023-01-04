@@ -1,24 +1,39 @@
+const axios = require("axios");
+const { Router } = require("express");
+const router = Router();
+const { Temperament } = require("../db");
+const { API_KEY } = process.env;
 
 
 
+router.get("/", async (req, res) => {
+  try {
+    const temperamentApi = await axios.get(
+      `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
+    );
 
-router.get('/temperaments', async (req,res) => {
-    try {
-           const api = await axios.get('https://api.thedogapi.com/v1/breeds')
-           const perros = await api.data.map (el => el.temperament)
-           let perrosSplit = await perros.join().split(',')
-           let perrosTrim = await perrosSplit.map(e => e.trim())
-           await perrosTrim.forEach( async (e) => {
-               if(e.length > 0){
-                   await Temperament.findOrCreate({
-                       where : {name : e}
-                   })
-               }
-           })
-           const allTemperament = await Temperament.findAll()
-           // console.log(allTemperament)
-           return res.status(200).json(allTemperament)
-       }catch (error){
-            res.status(404).send({error: 'There are not temperaments'})
-        }
-   })
+    const temperamentsStrings = temperamentApi.data.map((t) => t.temperament);
+
+    const temperamentArray = [];
+    for (let i = 0; i < temperamentsStrings.length; i++) {
+      if (temperamentsStrings[i]) {
+        temperamentsStrings[i].split(", ").forEach((t) => {
+          temperamentArray.push(t);
+        });
+      }
+    }
+
+    temperamentArray.forEach((t) => {
+      Temperament.findOrCreate({
+        where: { name: t },
+      });
+    });
+    const allTemperaments = await Temperament.findAll();
+    res.status(200).send(allTemperaments);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ error: "No se encontraron temperamentos" });
+  }
+});
+
+module.exports = router;
