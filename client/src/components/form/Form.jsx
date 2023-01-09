@@ -19,10 +19,10 @@ export const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const allDogs = useSelector((state) => state.dogs);
+  const [errorsForm, setErrorsForm] = useState({});
   const [errorButton, setErrorButton] = useState(
     Object.keys(errorsForm).length < 1 ? false : true
   );
-  const [errorsForm, setErrorsForm] = useState({});
 
   useEffect(() => {
     dispatch(getAllDogs());
@@ -82,9 +82,9 @@ export const Form = () => {
 
   const validate = (data) => {
     let errors = {};
-    if (validateName(data.name)) errors.name = "There are error in the form";
-    if (!data.heightMin) errors.heightMin = "There are error in the form";
-
+    if (validateName(data.name)) errors.name = "Verify the data"; 
+    if (validateName(data.heightMin)) errors.heightMin = "Verify the data";
+   
     return errors;
   };
 
@@ -94,8 +94,7 @@ export const Form = () => {
   };
 
   // useEffect()
-
-  console.log("allDogs " + allDogs);
+  
   return (
     <div>
       <div>
@@ -135,6 +134,13 @@ export const Form = () => {
               value={breed.heightMax}
               onChange={handleChange}
             ></input>
+            {errorsForm.name ? (
+              <h4>
+                <small>{errorsForm.name}</small>
+              </h4>
+            ) : (
+              false
+            )}
 
             <label>Weight min</label>
             <input
@@ -142,6 +148,13 @@ export const Form = () => {
               value={breed.weightMin}
               onChange={handleChange}
             ></input>
+            {errorsForm.name ? (
+              <h4>
+                <small>{errorsForm.name}</small>
+              </h4>
+            ) : (
+              false
+            )}
 
             <label>Weight max</label>
             <input
@@ -149,6 +162,13 @@ export const Form = () => {
               value={breed.weightMax}
               onChange={handleChange}
             ></input>
+            {errorsForm.name ? (
+              <h4>
+                <small>{errorsForm.name}</small>
+              </h4>
+            ) : (
+              false
+            )}
 
             <label>Life Span</label>
             <input
