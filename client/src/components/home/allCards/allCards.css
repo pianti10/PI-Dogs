@@ -1,0 +1,13 @@
+.cardList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .cardList {
+      flex-direction: column;
+  }
+  }

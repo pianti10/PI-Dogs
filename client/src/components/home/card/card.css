@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  width: 20vw;
+  height: 35vh;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 30px;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  margin: 1rem;
+  cursor: pointer;
+  flex-direction: column;
+  }
+  
+  .imageContainer {
+    height: 50%;
+    width: 60%;
+    position: relative;
+    margin-top: 2rem;
+  }
+  
+  .textContainer {
+    height: 100%;
+    width: 60%;
+  }
+  
+  .dogImage {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .texts {
+    height: 42%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .card {
+      width: 90vw;
+      height: 30vw;
+    }
+  
+    .countryImage {
+      height: 15vw;
+      width: 15vw;
+    }
+  }

@@ -1,0 +1,18 @@
+.paginado {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: space-evenly;
+}
+
+.botonPaginado {
+    width: 3vw;
+    height: 3vw;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: space-evenly;
+    color: white;
+    margin: 0.5rem;
+    cursor: pointer;
+}

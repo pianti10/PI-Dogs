@@ -1,0 +1,20 @@
+.navBar{
+    width: 94%;
+    height: 16vh;
+    background: rgba(0, 0, 0, 0.50);
+    margin: 1% 3%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logo {
+    background-image: url('../../images/logo.svg');
+    background-repeat: no-repeat;
+    width: 15%;
+    height: 70%;
+    background-position: center;
+    filter: invert(0.9);
+    background-size: contain;
+}
