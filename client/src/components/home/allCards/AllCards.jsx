@@ -42,6 +42,8 @@ export default function AllCards() {
                 imageDog={e.image}
                 temperament={e.temperament}
                 id={e.id}
+                minWeight={e.weight_min}
+                maxWeight={e.weight_max}
               />
             </Link>
           ))

@@ -38,17 +38,16 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const [
-      {
-        name,
-        height_min,
-        height_max,
-        weight_min,
-        weight_max,
-        life_span,
-        temperament,
-      },
-    ] = req.body;
+    const {
+      name,
+      height_min,
+      height_max,
+      weight_min,
+      weight_max,
+      life_span,
+      image,
+      temperaments
+    } = req.body;
     if (
       !name ||
       !height_min ||
@@ -56,8 +55,9 @@ router.post("/", async (req, res) => {
       !weight_min ||
       !weight_max ||
       !life_span
-    )
+    ) 
       return res.status(400).send("Falta enviar datos");
+    
     const obj = {
       name,
       height_min,
@@ -65,7 +65,8 @@ router.post("/", async (req, res) => {
       weight_min,
       weight_max,
       life_span,
-      temperament,
+      image,
+      temperaments
     };
     const newDog = await Breed.create(obj);
     res.send(newDog);

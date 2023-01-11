@@ -3,17 +3,19 @@ import "./pages.css";
 
 export const Pages = ({ DogsPerPage, allDogs, paginado }) => {
   const pageNumbers = [];
+  console.log(allDogs)
 
   for (let i = 0; i < Math.ceil(allDogs / DogsPerPage); i++) {
     pageNumbers.push(i + 1);
   }
+  console.log(pageNumbers)
 
   return (
     <nav>
       <ul className="paginado">
         {pageNumbers &&
           pageNumbers.map((number) => (
-            <li className="number" key={number}>
+            <li className="number" Key={number}>
               <button className="botonPaginado" onClick={() => paginado(number)}>{number}</button>
             </li>
           ))}

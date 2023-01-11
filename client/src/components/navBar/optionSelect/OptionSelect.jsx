@@ -1,25 +1,19 @@
-import React from "react";
 import "./optionSelect.css";
+import { getTemperaments } from "../../../redux/actions";
+import { React, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export const OptionSelect = ({ name }) => {
-  if (name === "Temperament") {
-    return (
-      <select>
-        <option value={"All"}>{name}</option>
-      </select>
-    );
-  } else {
-    return (
-      <select>
-        <option value={"All"}>{"All"}</option>
-        <option value={"South America"}>{"South America"}</option>
-        <option value={"North America"}>North America</option>
-        <option value={"Africa"}>Africa</option>
-        <option value={"Asia"}>Asia</option>
-        <option value={"Europe"}>Europe</option>
-        <option value={"Oceania"}>Oceania</option>
-        <option value={"Antarctica"}>Antarctica</option>
-      </select>
-    );
+export const OptionSelect = () => {
+
+  // const [temperament, SetTemperament] = useState("");
+  const allDogs = useSelector((state) => state.dogs);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
+
+  const handleChange = (e) => {
+    dispatch(getTemperaments(e));
   }
 };

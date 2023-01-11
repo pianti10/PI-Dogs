@@ -1,203 +1,214 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, postDogs } from "../../redux/actions";
+import { getAllDogs, postDogs, getTemperament } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import "./form.css";
-const axios = require("axios");
+
+
 
 export const Form = () => {
   const [breed, setBreed] = useState({
     name: "",
-    heightMin: "",
-    heightMax: "",
-    weightMin: "",
-    weightMax: "",
-    lifeSpan: "",
-    temperaments: [],
+    height_min: "",
+    height_max: "",
+    weight_min: "",
+    weight_max: "",
+    life_span: "",
+    image: "",
+    temperaments: []
   });
 
+  const allDogs = useSelector((state) => state.dogs);
   const dispatch = useDispatch();
   const history = useHistory();
-  const allDogs = useSelector((state) => state.dogs);
-  const [errorsForm, setErrorsForm] = useState({});
-  const [errorButton, setErrorButton] = useState(
-    Object.keys(errorsForm).length < 1 ? false : true
-  );
+  const allTemperament = [];
 
-  useEffect(() => {
-    dispatch(getAllDogs());
-  }, [dispatch]);
+  //all dogs es un array que contiene el listado de temperamentos posibles del animal
+  allDogs.map(function (dog) {
+    let dogTemperament = "";
+    if (dog.temperament) {
+      dogTemperament = dog.temperament.split(",");
+      dogTemperament.forEach((doggy) => {
+        !allTemperament.includes(doggy) && allTemperament.push(doggy);
+      });
+    }
+    return allTemperament;
+  });
+
+  const [errorsForm, setErrorsForm] = useState({});
+  const [errorButton, setErrorButton] = useState(true);
 
   const handleChange = (e) => {
     setBreed({
       ...breed,
       [e.target.name]: e.target.value,
     });
-    setErrorsForm(validate(breed));
   };
 
-  const handleTemperaments = (e) => {
-    setBreed({
-      ...breed,
-      temperaments: [...new Set([breed.temperaments, e.target.value])],
-    });
-  };
 
-  //   const handleMultiple = (e) => {
-  //     console.log("temperamento que elegi " + e.target.value);
-  //     e.preventDefault();
-  //     setBreed((state) => {
-  //       console.log(state.dogs);
-
-  //       if (state.dogs.includes(e.target.value) === false) {
-  //         return {
-  //           ...state,
-  //           dogs: [...state.dogs, e.target.value],
-  //         };
-  //       } else {
-  //         return {
-  //           ...state,
-  //           dogs: [...state.dogs],
-  //         };
-  //       }
-  //     });
-  //   };
-
-  const handleSubmit = async (e) => {
+  const handleMultiple = (e) => {
+    console.log(e.target)
+    console.log("temperamento que elegi " + e.target.value);
     e.preventDefault();
-    setErrorsForm(validate(breed));
-    await axios.post("http://localhost:3001/dogs", breed);
-    console.log(breed);
-    setBreed({
-      name: "",
-      heightMin: "",
-      heightMax: "",
-      weightMin: "",
-      weightMax: "",
-      lifeSpan: "",
-      temperaments: [],
+    setBreed((state) => {
+      if (state.temperaments.includes(e.target.value) === false) {
+        return {
+          ...state,
+          temperaments: [...state.temperaments, e.target.value],
+        };
+      } else {
+        return {
+          ...state,
+          temperaments: [...state.temperaments],
+        };
+      }
     });
-    alert("Breed has been created");
   };
 
-  const validate = (data) => {
-    let errors = {};
-    if (validateName(data.name)) errors.name = "Verify the data"; 
-    if (validateName(data.heightMin)) errors.heightMin = "Verify the data";
-   
-    return errors;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      breed.name.length > 0 &&
+      breed.weight_min > 0 &&
+      breed.weight_max < 70
+    ) {
+      dispatch(postDogs(breed));
+      console.log(breed)
+      alert("Breed has been created");
+
+      setBreed({
+        name: "",
+        height_min: "",
+        height_max: "",
+        weight_min: "",
+        weight_max: "",
+        life_span: "",
+        image: "",
+        temperaments: []
+      });
+      history.push("/home");
+    } else {
+      alert("Complete correctly the form before sending it");
+    }
   };
 
-  const validateName = (str) => {
-    if (typeof str !== "string") return true;
-    if (str.length < 3) return true;
-  };
+  useEffect(() => {
+    dispatch(getAllDogs());
+  }, [dispatch]);
 
-  // useEffect()
-  
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name</label>
-            <input
-              name="name"
-              value={breed.name}
-              onChange={handleChange}
-            ></input>
-            {errorsForm.name ? (
-              <h4>
-                <small>{errorsForm.name}</small>
-              </h4>
-            ) : (
-              false
-            )}
+    <div className="formContainer">
+      <form onSubmit={handleSubmit}>
+        <div className="formData">
+          <label className="formLabel">Name</label>
+          <input
+            key={"name"}
+            className="inputFrom"
+            name="name"
+            value={breed.name}
+            onChange={handleChange}
+          ></input>
+          {errorsForm.name ? (
+            <h4>
+              <small>{errorsForm.name}</small>
+            </h4>
+          ) : (
+            false
+          )}
 
-            <label>Height min</label>
-            <input
-              name="heightMin"
-              value={breed.heightMin}
-              onChange={handleChange}
-            ></input>
-            {errorsForm.name ? (
-              <h4>
-                <small>{errorsForm.name}</small>
-              </h4>
-            ) : (
-              false
-            )}
+          <label className="formLabel">Height min</label>
+          <input
+            key={"height_min"}
+            className="inputFrom"
+            type="number"
+            name="height_min"
+            value={breed.height_min}
+            onChange={handleChange}
+          ></input>
+         
 
-            <label>Height max</label>
-            <input
-              name="heightMax"
-              value={breed.heightMax}
-              onChange={handleChange}
-            ></input>
-            {errorsForm.name ? (
-              <h4>
-                <small>{errorsForm.name}</small>
-              </h4>
-            ) : (
-              false
-            )}
+          <label className="formLabel">Height max</label>
+          <input
+            key={"height_max"}
+            className="inputFrom"
+            name="height_max"
+            type="number"
+            value={breed.height_max}
+            onChange={handleChange}
+          ></input>
+         
 
-            <label>Weight min</label>
-            <input
-              name="weightMin"
-              value={breed.weightMin}
-              onChange={handleChange}
-            ></input>
-            {errorsForm.name ? (
-              <h4>
-                <small>{errorsForm.name}</small>
-              </h4>
-            ) : (
-              false
-            )}
+          <label className="formLabel">Weight min</label>
+          <input
+            key={"weight_min"}
+            className="inputFrom"
+            name="weight_min"
+            type="number"
+            placeholder={"greater than 0"}
+            value={breed.weight_min}
+            onChange={handleChange}
+          ></input>
+          {errorsForm.name ? (
+            <h4>
+              <small>{errorsForm.name}</small>
+            </h4>
+          ) : (
+            false
+          )}
 
-            <label>Weight max</label>
-            <input
-              name="weightMax"
-              value={breed.weightMax}
-              onChange={handleChange}
-            ></input>
-            {errorsForm.name ? (
-              <h4>
-                <small>{errorsForm.name}</small>
-              </h4>
-            ) : (
-              false
-            )}
+          <label className="formLabel">Weight max</label>
+          <input
+            key={"weight_max"}
+            className="inputFrom"
+            name="weight_max"
+            type="number"
+            placeholder={"Less than 70"}
+            value={breed.weight_max}
+            onChange={handleChange}
+          ></input>
+          {errorsForm.name ? (
+            <h4>
+              <small>{errorsForm.name}</small>
+            </h4>
+          ) : (
+            false
+          )}
 
-            <label>Life Span</label>
-            <input
-              name="lifeSpan"
-              value={breed.lifeSpan}
-              onChange={handleChange}
-            ></input>
+          <label className="formLabel">Life Span</label>
+          <input
+            key={"life_span"}
+            className="inputFrom"
+            name="life_span"
+            value={breed.life_span}
+            onChange={handleChange}
+          ></input>
 
-            <label>Temperaments</label>
-            <select
-              name="temperaments"
-              value={breed.temperaments}
-              onChange={handleChange}
-            >
-              {/* <option value="empty">...</option>
-              {breed.map((e) => (
-                <option
-                  value={e.temperaments}
-                  key={e.temperaments}
-                  onClick={handleMultiple}
-                ></option>
-              ))} */}
-            </select>
-            <button type="submit" disabled={errorButton ? true : false}>
-              CREATE
-            </button>
-          </div>
-        </form>
-      </div>
+<label className="formLabel">Image</label>
+          <input
+            key={"image"}
+            className="inputFrom"
+            name="image"
+            value={breed.image}
+            onChange={handleChange}
+          ></input>
+
+          <label className="formLabel">Temperaments</label>
+          <select
+            key={"temperaments"}
+            className="inputSelect"
+            name="temperaments"
+            onChange={handleMultiple}
+          >
+            <option value="empty">...</option>
+            {allTemperament.map((e) => (
+              <option value={e} onClick={handleMultiple}>
+                {e}
+              </option>
+            ))}
+          </select>
+          <button type="submit">CREATE</button>
+        </div>
+      </form>
     </div>
   );
 };

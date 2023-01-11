@@ -10,10 +10,10 @@ router.get("/", async (req, res) => {
   try {
     const temperamentApi = await axios.get(
       `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
-    );
-
+    ); 
+    
     const temperamentsStrings = temperamentApi.data.map((t) => t.temperament);
-
+    
     const temperamentArray = [];
     for (let i = 0; i < temperamentsStrings.length; i++) {
       if (temperamentsStrings[i]) {
@@ -22,12 +22,14 @@ router.get("/", async (req, res) => {
         });
       }
     }
-
-    temperamentArray.forEach((t) => {
-      Temperament.findOrCreate({
-        where: { name: t },
+    const altTemperaments = [... new Set(temperamentArray)] 
+    console.log(altTemperaments) 
+    for (const temp of altTemperaments) {
+      await Temperament.findOrCreate({
+        where: { name: temp },
       });
-    });
+    }
+  
     const allTemperaments = await Temperament.findAll();
     res.status(200).send(allTemperaments);
   } catch (error) {

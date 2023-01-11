@@ -78,10 +78,10 @@ export function filterByBreeds(payload) {
   };
 }
 
-export function filterByTemp(Activity) {
+export function filterByTemp(Temperament) {
   return {
     type: FILTER_BY_TEMPERAMENTS,
-    payload: Activity,
+    payload: Temperament,
   };
 }
 
@@ -99,7 +99,7 @@ export function orderByPop(payload) {
   };
 }
 
-export function getTemperaments() {
+export const getTemperaments =() => {
   return async (dispatch) => {
     try {
       let response = await axios.get(`http://localhost:3001/temperaments`);
@@ -116,7 +116,7 @@ export function getTemperaments() {
   };
 }
 
-export function postDogs(payload) {
+export const postDogs = (payload) => {
   return async () => {
     try {
       let json = await axios.post(`http://localhost:3001/dogs`, payload);
