@@ -12,9 +12,9 @@ export const Searchbar = (setCurrentPage) => {
     dispatch(getAllDogs());
   }, [dispatch]);
 
-  const handleChange =(e) => {
-    console.log("hola", e)
-    dispatch(getDogsByName(e));
+  const handleChange =(name) => {
+    setName(name);
+    dispatch(getDogsByName(name));
     // setCurrentPage(1);
   }
 
@@ -23,9 +23,8 @@ export const Searchbar = (setCurrentPage) => {
       <input
         type="text"
         placeholder="Search your dog..."
-        onChange={(e) => {
-          setName(e.target.value);
-          handleChange(e.target.value);
+        onChange={(name) => {
+          handleChange(name.target.value);
         }}
       />
     </>

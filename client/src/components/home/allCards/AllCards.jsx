@@ -20,10 +20,10 @@ export default function AllCards() {
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
-    dispatch(getAllDogs());
-    dispatch(getTemperaments);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllDogs());
+  //   dispatch(getTemperaments);
+  // }, [dispatch]);
 
 
   return (
@@ -36,12 +36,12 @@ export default function AllCards() {
       <div className="cardList ">
         {allDogs.length > 0 ? (
           currentDogs.map((e) => (
-            <Link Key={e.id} to={`/detail/${e.id}`}>
+            <Link Key={e.id} to={`/dogs/${e.id}`}>
               <Card
+                id={e.id}
                 name={e.name}
                 imageDog={e.image}
                 temperament={e.temperament}
-                id={e.id}
                 minWeight={e.weight_min}
                 maxWeight={e.weight_max}
               />

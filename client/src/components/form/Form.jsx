@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, postDogs, getTemperament } from "../../redux/actions";
+import { getAllDogs, postDogs, getTemperaments } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import "./form.css";
 
@@ -47,8 +47,6 @@ export const Form = () => {
 
 
   const handleMultiple = (e) => {
-    console.log(e.target)
-    console.log("temperamento que elegi " + e.target.value);
     e.preventDefault();
     setBreed((state) => {
       if (state.temperaments.includes(e.target.value) === false) {
@@ -73,7 +71,6 @@ export const Form = () => {
       breed.weight_max < 70
     ) {
       dispatch(postDogs(breed));
-      console.log(breed)
       alert("Breed has been created");
 
       setBreed({
@@ -183,7 +180,7 @@ export const Form = () => {
             onChange={handleChange}
           ></input>
 
-<label className="formLabel">Image</label>
+          <label className="formLabel">Image</label>
           <input
             key={"image"}
             className="inputFrom"
@@ -197,6 +194,7 @@ export const Form = () => {
             key={"temperaments"}
             className="inputSelect"
             name="temperaments"
+            value={breed.temperaments}
             onChange={handleMultiple}
           >
             <option value="empty">...</option>

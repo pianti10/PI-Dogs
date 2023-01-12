@@ -3,7 +3,7 @@ import { NavBar } from "../navBar/NavBar";
 import { CreateBreedsButton } from "./CreateBreedsButton/CreateBreedsButton";
 import AllCards from "../home/allCards/AllCards";
 import "./home.css";
-import Detail from "../detail/Detail";
+
 
 export const Home = () => {
   return (
@@ -11,7 +11,6 @@ export const Home = () => {
       <NavBar />
       <AllCards />
       <CreateBreedsButton />
-      <Detail/>
     </div>
   );
 };
