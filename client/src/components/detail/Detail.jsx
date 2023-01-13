@@ -1,14 +1,13 @@
-import React, {useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDogId } from "../../redux/actions";
 import "./detail.css";
 import { useParams } from "react-router-dom";
 
-export const DetailDog = (props) => {
+export const DetailDog = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const dogArr = useSelector((state) => state.detail);
-  // const [estado, setEstado] = useState[0];
+  const dogArr = useSelector((state) => state.detail);  
 
   useEffect(() => {
     dispatch(getDogId(id));
@@ -30,11 +29,11 @@ export const DetailDog = (props) => {
           <h2 className="texts">{myDog.name}</h2>
           <h3 className="texts">
             {" "}
-            Height: <br /> From {myDog.height_min} to {myDog.height_min}
+            Height: <br /> From {myDog.height_min} to {myDog.height_max}
           </h3>
           <h3 className="texts">
             {" "}
-            Life Span: <br /> From {myDog.life_span} to {myDog.life_span}
+            Life Span: <br /> {myDog.life_span} 
           </h3>
           <div className="texts">
             <h3> Temperament: </h3>

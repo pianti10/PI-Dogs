@@ -4,13 +4,13 @@ export const ERROR = "ERROR";
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_DOG_ID = "GET_DOG_ID";
 export const DELETE_DOG_ID = "DELETE_DOG_ID"
-export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const GET_DOGS_BY_QUERY = "GET_DOGS_BY_QUERY";
 export const FILTER_BY_BREED = "FILTER_BY_BREED";
+export const FILTER_CREATED = "FILTER_CREATED"
 export const FILTER_BY_TEMPERAMENTS = "FILTER_BY_TEMPERAMENTS";
 export const ORDER_DOGS_ALF = "ORDER_DOGS_ALF";
 export const ORDER_DOGS_POP = "ORDER_DOGS_POP";
-export const ORDER_DOGS_BY_WEIGHT = "ORDER_DOGS_BY_WEIGHT";
+// export const ORDER_DOGS_BY_WEIGHT = "ORDER_DOGS_BY_WEIGHT";
 export const FILTER_DOGS_BY_MAX_WEIGHT = "FILTER_DOGS_BY_MAX_WEIGHT";
 export const FILTER_DOGS_BY_MIN_WEIGHT = "FILTER_DOGS_BY_MIN_WEIGHT";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
@@ -22,12 +22,12 @@ export const getAllDogs = () => {
       let response = await axios.get(`http://localhost:3001/dogs`);
       dispatch({
         type: GET_ALL_DOGS,
-        payload: response.data,
+        payload: response.data
       });
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error,
+        payload: error
       });
     }
   };
@@ -39,12 +39,12 @@ export function getDogId(id) {
       let json = await axios.get(`http://localhost:3001/dogs/${id}`);
       dispatch({
         type: GET_DOG_ID,
-        payload: json.data,
+        payload: json.data
       });
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error,
+        payload: error
       });
     }
   };
@@ -58,13 +58,6 @@ export function deleteDogId() {
 }
 }
 
-export function getDogsByName(name) {
-  return {
-    type: GET_DOGS_BY_NAME,
-    payload: name,
-  };
-}
-
 export function getDogsQuery(name) {
   return async (dispatch) => {
     try {
@@ -73,12 +66,12 @@ export function getDogsQuery(name) {
       );
       dispatch({
         type: GET_DOGS_BY_QUERY,
-        payload: json.data,
+        payload: json.data
       });
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error,
+        payload: error
       });
     }
   };
@@ -87,37 +80,45 @@ export function getDogsQuery(name) {
 export function filterByBreeds(payload) {
   return {
     type: FILTER_BY_BREED,
-    payload,
+    payload
   };
 }
 
-export function filterByTemp(Temperament) {
+export function filterCreated(payload) {
+  return {
+      type: 'FILTER_CREATED',
+      payload
+  }
+}
+
+
+export function filterByTemp(Temperaments) {
   return {
     type: FILTER_BY_TEMPERAMENTS,
-    payload: Temperament,
+    payload: Temperaments,
   };
 }
 
-export const orderByName = (payload) => {
+export const orderDogsAlf = (payload) => {
   return {
     type: ORDER_DOGS_ALF,
-    payload,
+    payload
   };
 };
 
 export function orderByPop(payload) {
   return {
     type: ORDER_DOGS_POP,
-    payload,
+    payload
   };
 }
 
-export function orderByWeight(payload) {
-  return {
-      type: 'ORDER_BY_WEIGHT',
-      payload
-  }
-}
+// export function orderByWeight(payload) {
+//   return {
+//       type: 'ORDER_BY_WEIGHT',
+//       payload
+//   }
+// }
 
 export function filterDogsByMAXWeight(payload) {
   return {
@@ -144,7 +145,7 @@ export const getTemperaments =() => {
     } catch (error) {
       dispatch({
         type: ERROR,
-        payload: error,
+        payload: error
       });
     }
   };

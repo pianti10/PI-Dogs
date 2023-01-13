@@ -13,7 +13,7 @@ export const Pages = ({ DogsPerPage, allDogs, paginado }) => {
       <ul className="paginado">
         {pageNumbers &&
           pageNumbers.map((number) => (
-            <li className="number" Key={number}>
+            <li className="number" key={number}>
               <button className="botonPaginado" onClick={() => paginado(number)}>{number}</button>
             </li>
           ))}

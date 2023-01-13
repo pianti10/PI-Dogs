@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, getDogsByName } from "../../../redux/actions";
+import { getAllDogs, getDogsQuery } from "../../../redux/actions";
 import "../searchBar/searchBar.css";
 
-export const Searchbar = (setCurrentPage) => {
+export const Searchbar = () => {
   const [name, setName] = useState("");
   const allDogs = useSelector((state) => state.dogs);
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ export const Searchbar = (setCurrentPage) => {
 
   const handleChange =(name) => {
     setName(name);
-    dispatch(getDogsByName(name));
-    // setCurrentPage(1);
+    dispatch(getDogsQuery(name));
+  
   }
 
   return (

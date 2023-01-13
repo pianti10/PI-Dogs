@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, postDogs, getTemperaments } from "../../redux/actions";
+import { getAllDogs, postDogs } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import "./form.css";
 
@@ -36,7 +36,7 @@ export const Form = () => {
   });
 
   const [errorsForm, setErrorsForm] = useState({});
-  const [errorButton, setErrorButton] = useState(true);
+  //const [errorButton, setErrorButton] = useState(true);
 
   const handleChange = (e) => {
     setBreed({
