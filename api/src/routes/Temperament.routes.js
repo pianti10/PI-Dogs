@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
       }
     }
     const altTemperaments = [...new Set(temperamentArray)];
-    console.log(altTemperaments);
     for (const temp of altTemperaments) {
       await Temperament.findOrCreate({
         where: { name: temp },
@@ -36,16 +35,16 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    const newTemperament = req.params.temperaments;
-    const postedTemp = await Temperament.create({
-      name: newTemperament,
-    });
-    return res.status(200).json(postedTemp);
-  } catch (error) {
-    res.status(404).send(error);
-  }
-});
+// router.post("/", async (req, res) => {
+//   try {
+//     const newTemperament = req.params.temperaments;
+//     const postedTemp = await Temperament.create({
+//       name: newTemperament,
+//     });
+//     return res.status(200).json(postedTemp);
+//   } catch (error) {
+//     res.status(404).send(error);
+//   }
+// });
 
 module.exports = router;

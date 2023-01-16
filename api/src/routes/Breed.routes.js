@@ -37,27 +37,27 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const {
+    name,
+    height_min,
+    height_max,
+    weight_min,
+    weight_max,
+    life_span,
+    image,
+    temperaments,
+  } = req.body;
+  if (
+    !name ||
+    !height_min ||
+    !height_max ||
+    !weight_min ||
+    !weight_max ||
+    !life_span
+  )
+    return res.status(400).send({msg: "Falta enviar datos"});
+
   try {
-    const {
-      name,
-      height_min,
-      height_max,
-      weight_min,
-      weight_max,
-      life_span,
-      image,
-      temperaments
-    } = req.body;
-    if (
-      !name ||
-      !height_min ||
-      !height_max ||
-      !weight_min ||
-      !weight_max ||
-      !life_span
-    ) 
-      return res.status(400).send("Falta enviar datos");
-    
     const obj = {
       name,
       height_min,
@@ -66,10 +66,15 @@ router.post("/", async (req, res) => {
       weight_max,
       life_span,
       image,
-      temperaments
+      temperaments,
     };
     const newDog = await Breed.create(obj);
-    res.send(newDog);
+    await newDog.addTemperament(temperaments);
+
+    const aux = temperaments.map(async () => {
+      await Temperament.findOne({ where: { name: temperaments } });
+    });
+    res.json(aux);
   } catch (error) {
     console.log(error);
   }

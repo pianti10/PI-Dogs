@@ -43,6 +43,11 @@ module.exports = (sequelize) => {
       life_span: {
         type: DataTypes.STRING,
       },
+      createdInDb: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      }
     },
     { timestamps: false }
   );

@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, postDogs } from "../../redux/actions";
+import { getAllDogs, getTemperaments, postDogs } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import "./form.css";
 
@@ -18,25 +18,15 @@ export const Form = () => {
     temperaments: []
   });
 
-  const allDogs = useSelector((state) => state.dogs);
+
+  const allTemperaments = useSelector((state) => state.temperaments)
   const dispatch = useDispatch();
   const history = useHistory();
-  const allTemperament = [];
 
-  //all dogs es un array que contiene el listado de temperamentos posibles del animal
-  allDogs.map(function (dog) {
-    let dogTemperament = "";
-    if (dog.temperament) {
-      dogTemperament = dog.temperament.split(",");
-      dogTemperament.forEach((doggy) => {
-        !allTemperament.includes(doggy) && allTemperament.push(doggy);
-      });
-    }
-    return allTemperament;
-  });
-
-  const [errorsForm, setErrorsForm] = useState({});
-  //const [errorButton, setErrorButton] = useState(true);
+  useEffect(() => {
+    dispatch(getTemperaments())
+  }, [dispatch]);
+ 
 
   const handleChange = (e) => {
     setBreed({
@@ -66,9 +56,12 @@ export const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      breed.name.length > 0 &&
+      breed.name.length > 2 &&
       breed.weight_min > 0 &&
-      breed.weight_max < 70
+      breed.weight_max < 95 &&
+      breed.height_min > 10 &&
+      breed.height_max < 120
+      
     ) {
       dispatch(postDogs(breed));
       alert("Breed has been created");
@@ -89,9 +82,6 @@ export const Form = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(getAllDogs());
-  }, [dispatch]);
 
   return (
     <div className="formContainer">
@@ -102,23 +92,19 @@ export const Form = () => {
             key={"name"}
             className="inputFrom"
             name="name"
+            placeholder="At least three letters"
             value={breed.name}
             onChange={handleChange}
           ></input>
-          {errorsForm.name ? (
-            <h4>
-              <small>{errorsForm.name}</small>
-            </h4>
-          ) : (
-            false
-          )}
+         
 
           <label className="formLabel">Height min</label>
           <input
             key={"height_min"}
             className="inputFrom"
-            type="number"
             name="height_min"
+            type="number"
+            placeholder="Greater than 10"
             value={breed.height_min}
             onChange={handleChange}
           ></input>
@@ -130,6 +116,7 @@ export const Form = () => {
             className="inputFrom"
             name="height_max"
             type="number"
+            placeholder="Less than 120"
             value={breed.height_max}
             onChange={handleChange}
           ></input>
@@ -141,17 +128,11 @@ export const Form = () => {
             className="inputFrom"
             name="weight_min"
             type="number"
-            placeholder={"greater than 0"}
+            placeholder={"Greater than 0"}
             value={breed.weight_min}
             onChange={handleChange}
           ></input>
-          {errorsForm.name ? (
-            <h4>
-              <small>{errorsForm.name}</small>
-            </h4>
-          ) : (
-            false
-          )}
+         
 
           <label className="formLabel">Weight max</label>
           <input
@@ -159,17 +140,11 @@ export const Form = () => {
             className="inputFrom"
             name="weight_max"
             type="number"
-            placeholder={"Less than 70"}
+            placeholder={"Less than 95"}
             value={breed.weight_max}
             onChange={handleChange}
           ></input>
-          {errorsForm.name ? (
-            <h4>
-              <small>{errorsForm.name}</small>
-            </h4>
-          ) : (
-            false
-          )}
+         
 
           <label className="formLabel">Life Span</label>
           <input
@@ -198,8 +173,8 @@ export const Form = () => {
             onChange={handleMultiple}
           >
             <option value="empty">...</option>
-            {allTemperament.map((e) => (
-              <option value={e} onClick={handleMultiple}>
+            {allTemperaments.map((e) => (
+              <option key={e} value={e} onClick={handleMultiple}>
                 {e}
               </option>
             ))}
