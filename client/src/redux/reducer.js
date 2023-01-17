@@ -91,14 +91,44 @@ const rootReducer = (state = initialState, action) => {
     //   };
 
     case FILTER_CREATED:
-      const createdFilter =
-        action.payload === "Created"
-          ? state.dogs.filter((el) => el.createdInDB === true)
-          : state.dogs.filter((el) => !el.createdInDB);
-      return {
-        ...state,
-        dogs: createdFilter,
-      };
+      // const createdFilter =
+      // action.payload === "Created"
+      // ? state.dogs.filter((el) => el.createdInDB === true)
+      // : state.dogs.filter((el) => !el.createdInDB);
+      // console.log(state.dogs);
+      // return {
+      //   ...state,
+      //   dogs: createdFilter,
+      // };
+
+      const allDoggys = state.dogs;
+      let filteredDoggys = [];
+
+      if (action.payload === "Created") {
+          allDoggys.map((e) => {
+           return e.createdInDb !== undefined && (filteredDoggys.push(e));
+         });
+        return {
+          ...state,
+          filterDogs: filteredDoggys,
+        };
+
+
+      } else if (action.payload === "Api") {
+        allDoggys.map((e) => {
+        return e.createdInDb === undefined && (filteredDoggys.push(e));
+       });
+        return {
+          ...state,
+          filterDogs: filteredDoggys,
+        };
+
+      } else if (action.payload === "All"){
+        return {
+          ...state,
+          filterDogs: allDoggys,
+        };
+      }
 
     case ORDER_DOGS_ALF:
       let sortedAlf;
