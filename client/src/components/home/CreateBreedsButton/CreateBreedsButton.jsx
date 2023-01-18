@@ -6,7 +6,7 @@ export const CreateBreedsButton = () => {
   return (
     <Link to ='breeds' >
     <div className='button-container'>
-        <button className='BreedButton'>Create Breed</button>
+        <button className='breedButton'>Create Breed</button>
     </div>
     </Link>
   )

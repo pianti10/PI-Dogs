@@ -11,8 +11,8 @@ router.get("/", async (req, res) => {
     );
 
     const temperamentsStrings = temperamentApi.data.map((t) => t.temperament);
-
     const temperamentArray = [];
+
     for (let i = 0; i < temperamentsStrings.length; i++) {
       if (temperamentsStrings[i]) {
         temperamentsStrings[i].split(", ").forEach((t) => {
@@ -20,7 +20,9 @@ router.get("/", async (req, res) => {
         });
       }
     }
+
     const altTemperaments = [...new Set(temperamentArray)];
+    
     for (const temp of altTemperaments) {
       await Temperament.findOrCreate({
         where: { name: temp },
@@ -34,17 +36,5 @@ router.get("/", async (req, res) => {
     res.status(404).send({ error: "No se encontraron temperamentos" });
   }
 });
-
-// router.post("/", async (req, res) => {
-//   try {
-//     const newTemperament = req.params.temperaments;
-//     const postedTemp = await Temperament.create({
-//       name: newTemperament,
-//     });
-//     return res.status(200).json(postedTemp);
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// });
 
 module.exports = router;

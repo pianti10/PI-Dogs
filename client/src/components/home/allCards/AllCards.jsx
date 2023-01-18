@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Card from "../../home/card/Card";
-import { getAllDogs, getTemperaments } from "../../../redux/actions";
+import { getAllDogs } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 import "./allCards.css";
 import { Pages } from "../pages/Pages";
-
 
 export default function AllCards() {
   const dispatch = useDispatch();
   let allDogs = useSelector((state) => state.dogs);
   const filteredDogs = useSelector((state) => state.filterDogs);
-  filteredDogs.length > 0 && ( allDogs = filteredDogs);
+  filteredDogs.length > 0 && (allDogs = filteredDogs);
   const [currentPage, setCurrentPage] = useState(1);
-  const [dogsPerPage, setDogsPerPage] = useState(8);
+  const [dogsPerPage] = useState(8);
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   useEffect(() => {
     dispatch(getAllDogs());
-    // dispatch(getTemperaments);
   }, [dispatch]);
-
+  
   return (
     <>
       <Pages

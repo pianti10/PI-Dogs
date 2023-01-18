@@ -25,13 +25,13 @@ const getApiInfo = async () => {
 
 const getDBInfo = async () => {
   const dogsDB = await Breed.findAll({
-    include: {
+    include: [{
       model: Temperament,
       attributes: ["name"],
       through: {
         attributes: [],
       },
-    },
+    }]
   });
   return dogsDB;
 };
@@ -39,7 +39,18 @@ const getDBInfo = async () => {
 const getInfoTotal = async () => {
   const apiInfo = await getApiInfo();
   const DBInfo = await getDBInfo();
-  const infoTotal = apiInfo.concat(DBInfo);
+  
+  const info = DBInfo.map((p) => {
+    const temperamentNames = []
+    const dog = {...p}
+    for (const temperament of p.dataValues.temperaments) {
+      temperamentNames.push(temperament.name)
+    }
+    dog.dataValues.temperament = temperamentNames.join(", ")
+    delete dog.dataValues.temperaments
+    return dog.dataValues
+  })
+  const infoTotal = apiInfo.concat(info);
   return infoTotal;
 };
 

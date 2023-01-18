@@ -7,7 +7,6 @@ export const DELETE_DOG_ID = "DELETE_DOG_ID";
 export const GET_DOGS_BY_QUERY = "GET_DOGS_BY_QUERY";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 export const POST_DOGS = "POST_DOGS";
-//export const FILTER_BY_API_BREED = "FILTER_BY_BREED";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const FILTER_BY_TEMPERAMENTS = "FILTER_BY_TEMPERAMENTS";
 export const ORDER_DOGS_ALF = "ORDER_DOGS_ALF";
@@ -107,12 +106,6 @@ export const postDogs = (payload) => {
   };
 };
 
-// export function filterByApiBreeds(payload) {
-//   return {
-//     type: FILTER_BY_API_BREED,
-//     payload
-//   };
-// }
 
 export function filterCreated(payload) {
   return {

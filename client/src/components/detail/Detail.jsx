@@ -35,9 +35,9 @@ export const DetailDog = () => {
             {" "}
             Life Span: <br /> {myDog.life_span} 
           </h3>
-          <div className="texts">
-            <h3> Temperament: </h3>
-            <p>
+          <div className="temperamentTexts">
+            <h3 className="texts"> Temperament: </h3>
+            <p className="texts">
               {myDog.createdInDB
                 ? myDog.temperaments.map((el) => el.name).join(", ")
                 : myDog.temperament}

@@ -1,6 +1,7 @@
 .formContainer {
     width: 100vw;
     height: 100vh;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),  url('../../images/Formulario.jpg');
 }
 
 .formData {
@@ -29,4 +30,24 @@
 .formLabel {
     color: white;
     font-size: 1.5rem;
+}
+
+.submitButton {
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 10px;
+    color: white;
+    border: none;
+    height: 5vh;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    cursor: pointer;
+}
+
+.errorText {
+    color: rgb(195, 1, 1);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
 }

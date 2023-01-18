@@ -47,6 +47,11 @@
     text-align: center;
     font-size: 1rem;
   }
+
+  .temperamentContainer {
+    display: flex;
+    flex-direction: row;
+  }
   
   @media only screen and (max-width: 600px) {
     .card {

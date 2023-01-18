@@ -3,6 +3,7 @@
     flex-direction: row;
     list-style-type: none;
     justify-content: space-evenly;
+    padding-left: 0;
 }
 
 .botonPaginado {

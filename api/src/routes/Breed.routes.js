@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Router } = require("express");
 const { Breed, Temperament } = require("../db");
 const router = Router();
@@ -7,6 +8,7 @@ router.get("/", async (req, res) => {
   try {
     const name = req.query.name;
     const infoTotal = await getInfoTotal();
+    
     if (name) {
       const dogName = await infoTotal.filter((d) =>
         d.name.toLowerCase().includes(name.toLowerCase())
@@ -55,7 +57,7 @@ router.post("/", async (req, res) => {
     !weight_max ||
     !life_span
   )
-    return res.status(400).send({msg: "Falta enviar datos"});
+    return res.status(400).send({ msg: "Falta enviar datos" });
 
   try {
     const obj = {
@@ -69,12 +71,12 @@ router.post("/", async (req, res) => {
       temperaments,
     };
     const newDog = await Breed.create(obj);
-    await newDog.addTemperament(temperaments);
-
-    const aux = temperaments.map(async () => {
-      await Temperament.findOne({ where: { name: temperaments } });
+    const allTemperaments = await Temperament.findAll({
+      where: { name: { [Op.in]: temperaments } },
     });
-    res.json(aux);
+    
+    await newDog.addTemperaments(allTemperaments);
+    res.json(allTemperaments);
   } catch (error) {
     console.log(error);
   }

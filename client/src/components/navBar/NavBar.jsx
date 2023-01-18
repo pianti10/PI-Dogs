@@ -2,7 +2,6 @@ import React from "react";
 import "./navBar.css";
 import { Searchbar } from "./searchBar/SearchBar";
 import {
-  //filterByApiBreeds,
   filterCreated,
   orderByWeight,
   orderDogsAlf,
@@ -19,10 +18,6 @@ export const NavBar = () => {
   useEffect(() => {
     dispatch(getTemperaments())
   }, [dispatch]);
-
-  // const handleFilterBreeds = (filtro) => {
-  //   dispatch(filterCreated(filtro));
-  // };
 
   const handleFilterCreated = (filtro) => {
     dispatch(filterCreated(filtro));
@@ -69,7 +64,7 @@ export const NavBar = () => {
         name=""
         id=""
       >
-        <option value="All">Any race</option>
+        <option value="All">Any breed</option>
         <option value="Api">Api races</option>
         <option value="Created">Created races</option>
       </select>
