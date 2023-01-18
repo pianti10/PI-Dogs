@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTemperaments, postDogs } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 import "./form.css";
+import { Link } from "react-router-dom";
 
 export const Form = () => {
   const [breed, setBreed] = useState({
@@ -13,7 +14,7 @@ export const Form = () => {
     weight_max: "",
     life_span: "",
     image: "",
-    temperaments: []
+    temperaments: [],
   });
 
   const [nameVerification, setNameVerification] = useState(false);
@@ -21,15 +22,14 @@ export const Form = () => {
   const [maxHeightVerification, setMaxHeightVerification] = useState(false);
   const [minWeightVerification, setMinWeightVerification] = useState(false);
   const [maxWeightVerification, setMaxWeightVerification] = useState(false);
-  
-  const allTemperaments = useSelector((state) => state.temperaments)
+
+  const allTemperaments = useSelector((state) => state.temperaments);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(getTemperaments())
+    dispatch(getTemperaments());
   }, [dispatch]);
- 
 
   const handleChange = (e) => {
     setBreed({
@@ -37,7 +37,6 @@ export const Form = () => {
       [e.target.name]: e.target.value,
     });
   };
-
 
   const handleMultiple = (e) => {
     e.preventDefault();
@@ -64,7 +63,6 @@ export const Form = () => {
       breed.weight_max < 95 &&
       breed.height_min > 10 &&
       breed.height_max < 120
-      
     ) {
       dispatch(postDogs(breed));
       alert("Breed has been created");
@@ -77,7 +75,7 @@ export const Form = () => {
         weight_max: "",
         life_span: "",
         image: "",
-        temperaments: []
+        temperaments: [],
       });
       history.push("/home");
     } else {
@@ -86,31 +84,48 @@ export const Form = () => {
   };
 
   const inputNameVerification = (e) => {
-    e.target.value.length < 3 ? setNameVerification(true) : setNameVerification(false) ;
-  }
+    e.target.value.length < 3
+      ? setNameVerification(true)
+      : setNameVerification(false);
+  };
 
   const inputMinHeightVerification = (e) => {
-    Number(e.target.value) <= 10 ? setMinHeightVerification(true) : setMinHeightVerification(false) ;
-  }
+    Number(e.target.value) <= 10
+      ? setMinHeightVerification(true)
+      : setMinHeightVerification(false);
+  };
 
   const inputMaxHeightVerification = (e) => {
-    Number(e.target.value) > 119 ? setMaxHeightVerification(true) : setMaxHeightVerification(false) ;
-  }
+    Number(e.target.value) > 119
+      ? setMaxHeightVerification(true)
+      : setMaxHeightVerification(false);
+  };
 
   const inputMinWeightVerification = (e) => {
-    Number(e.target.value) <= 0 ? setMinWeightVerification(true) : setMinWeightVerification(false) ;
-  }
+    Number(e.target.value) <= 0
+      ? setMinWeightVerification(true)
+      : setMinWeightVerification(false);
+  };
 
   const inputMaxWeightVerification = (e) => {
-    Number(e.target.value) >= 95 ? setMaxWeightVerification(true) : setMaxWeightVerification(false) ;
-  }
-  
+    Number(e.target.value) >= 95
+      ? setMaxWeightVerification(true)
+      : setMaxWeightVerification(false);
+  };
+
   return (
     <div className="formContainer">
+      <Link to="/home">
+        <button className="backButton">Back</button>
+      </Link>
       <form onSubmit={handleSubmit}>
         <div className="formData">
           <label className="formLabel">Name</label>
-          {nameVerification === true && (<h3 className="errorText">Name must be at least 3 characters long</h3>)}
+          {nameVerification === true && (
+            <h3 className="errorText">
+              Name must be at least 3 characters long
+            </h3>
+          )}
           <input
             key={"name"}
             className="inputFrom"
@@ -119,11 +134,13 @@ export const Form = () => {
             value={breed.name}
             onChange={handleChange}
             onKeyUp={inputNameVerification}
-            maxLength = {20}
+            maxLength={20}
           ></input>
-         
+
           <label className="formLabel">Height min</label>
-          {minHeightVerification === true && (<h3 className="errorText">The minimum must be greater then 10</h3>)}
+          {minHeightVerification === true && (
+            <h3 className="errorText">The minimum must be greater then 10</h3>
+          )}
           <input
             key={"height_min"}
             className="inputFrom"
@@ -134,10 +151,11 @@ export const Form = () => {
             onChange={handleChange}
             onKeyUp={inputMinHeightVerification}
           ></input>
-         
 
           <label className="formLabel">Height max</label>
-          {maxHeightVerification === true && (<h3 className="errorText">The Maximum must be less then 120</h3>)}
+          {maxHeightVerification === true && (
+            <h3 className="errorText">The Maximum must be less then 120</h3>
+          )}
           <input
             key={"height_max"}
             className="inputFrom"
@@ -148,10 +166,11 @@ export const Form = () => {
             onChange={handleChange}
             onKeyUp={inputMaxHeightVerification}
           ></input>
-         
 
           <label className="formLabel">Weight min</label>
-          {minWeightVerification === true && (<h3 className="errorText">The Minimum must be greater then 0</h3>)}
+          {minWeightVerification === true && (
+            <h3 className="errorText">The Minimum must be greater then 0</h3>
+          )}
           <input
             key={"weight_min"}
             className="inputFrom"
@@ -162,10 +181,11 @@ export const Form = () => {
             onChange={handleChange}
             onKeyUp={inputMinWeightVerification}
           ></input>
-         
 
           <label className="formLabel">Weight max</label>
-          {maxWeightVerification === true && (<h3 className="errorText">The Maximum must be less then 95</h3>)}
+          {maxWeightVerification === true && (
+            <h3 className="errorText">The Maximum must be less then 95</h3>
+          )}
           <input
             key={"weight_max"}
             className="inputFrom"
@@ -176,7 +196,6 @@ export const Form = () => {
             onChange={handleChange}
             onKeyUp={inputMaxWeightVerification}
           ></input>
-         
 
           <label className="formLabel">Life Span</label>
           <input
@@ -212,7 +231,9 @@ export const Form = () => {
               </option>
             ))}
           </select>
-          <button className="submitButton" type="submit">CREATE</button>
+          <button className="submitButton" type="submit">
+            CREATE
+          </button>
         </div>
       </form>
     </div>

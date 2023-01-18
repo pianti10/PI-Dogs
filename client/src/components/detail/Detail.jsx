@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDogId } from "../../redux/actions";
 import "./detail.css";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const DetailDog = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const dogArr = useSelector((state) => state.detail);  
+  const dogArr = useSelector((state) => state.detail);
 
   useEffect(() => {
     dispatch(getDogId(id));
@@ -21,6 +22,9 @@ export const DetailDog = () => {
 
   return (
     <div key={myDog.id} className="detailContainer">
+      <Link to="/home">
+        <button className="backButton">Back</button>
+      </Link>
       <div className="Detail">
         <div className="imageContainer">
           <img src={myDog.image} alt="dog" className="dogImage" />
@@ -33,7 +37,7 @@ export const DetailDog = () => {
           </h3>
           <h3 className="texts">
             {" "}
-            Life Span: <br /> {myDog.life_span} 
+            Life Span: <br /> {myDog.life_span}
           </h3>
           <div className="temperamentTexts">
             <h3 className="texts"> Temperament: </h3>

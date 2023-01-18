@@ -16,4 +16,10 @@
     color: white;
     margin: 0.5rem;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.botonPaginado:hover {
+    background: rgba(0, 0, 0, 0.70);
 }

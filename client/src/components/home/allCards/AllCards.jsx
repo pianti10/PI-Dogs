@@ -22,9 +22,20 @@ export default function AllCards() {
   useEffect(() => {
     dispatch(getAllDogs());
   }, [dispatch]);
+
+  const handleBack = () => {
+    currentPage > 1 && (setCurrentPage(currentPage - 1))
+  }
+
   
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1)
+  }
+
   return (
     <>
+      <button className="breedButton" onClick={handleBack}>Back</button>
+      <button className="breedButton" onClick={handleNext}>Next</button>
       <Pages
         DogsPerPage={dogsPerPage}
         allDogs={allDogs.length}
@@ -41,6 +52,7 @@ export default function AllCards() {
                 temperament={e.temperament}
                 minWeight={e.weight_min}
                 maxWeight={e.weight_max}
+                origin={e.origin}
               />
             </Link>
           ))
