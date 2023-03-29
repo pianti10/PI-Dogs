@@ -5,7 +5,7 @@ import Home from './components/home/Home'
 import Detail from "./components/detail/Detail";
 import  Form from "./components/form/Form"
 import axios from "axios";
-axios.defaults.baseURL = 'http://localhost:3001/' ;
+axios.defaults.baseURL = 'https://pi-dogs-production-f2db.up.railway.app/' ;
 
 function App() {
   return (
