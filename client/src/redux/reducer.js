@@ -40,12 +40,6 @@ const rootReducer = (state = initialState, action) => {
         detail: action.payload,
       };
 
-    case DELETE_DOG_ID:
-      return {
-        ...state,
-        details: [],
-      };
-
     case GET_DOGS_BY_QUERY:
       return {
         ...state,

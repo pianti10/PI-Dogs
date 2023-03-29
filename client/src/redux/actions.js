@@ -15,7 +15,7 @@ export const ORDER_DOGS_BY_WEIGHT = "ORDER_DOGS_BY_WEIGHT";
 export const getAllDogs = () => {
   return async (dispatch) => {
     try {
-      let response = await axios.get(`http://localhost:3001/dogs`);
+      let response = await axios.get(`/dogs`);
       dispatch({
         type: GET_ALL_DOGS,
         payload: response.data,
@@ -32,7 +32,7 @@ export const getAllDogs = () => {
 export const getTemperaments = () => {
   return async (dispatch) => {
     try {
-      let response = await axios.get(`http://localhost:3001/temperaments`);
+      let response = await axios.get(`/temperaments`);
       let tempArray = response.data.map((objeto) => objeto.name);
       dispatch({
         type: GET_TEMPERAMENTS,
@@ -50,7 +50,7 @@ export const getTemperaments = () => {
 export function getDogId(id) {
   return async (dispatch) => {
     try {
-      let json = await axios.get(`http://localhost:3001/dogs/${id}`);
+      let json = await axios.get(`/dogs/${id}`);
       dispatch({
         type: GET_DOG_ID,
         payload: json.data,
@@ -64,24 +64,10 @@ export function getDogId(id) {
   };
 }
 
-export function deleteDog(id) {
-  return async function (dispatch) {
-    try {
-      await axios.delete(`http://localhost:3001/dogs/${id}`);
-      return dispatch({
-        type: DELETE_DOG_ID,
-        payload: id,
-      });
-    } catch (error) {
-      alert("no se pudo borrar el perro");
-    }
-  };
-}
-
 export function getDogsQuery(name) {
   return async (dispatch) => {
     try {
-      let json = await axios.get(`http://localhost:3001/dogs?name=${name}`);
+      let json = await axios.get(`/dogs?name=${name}`);
       dispatch({
         type: GET_DOGS_BY_QUERY,
         payload: json.data,
@@ -98,7 +84,7 @@ export function getDogsQuery(name) {
 export const postDogs = (payload) => {
   return async () => {
     try {
-      let json = await axios.post(`http://localhost:3001/dogs`, payload);
+      let json = await axios.post(`/dogs`, payload);
       return json;
     } catch (error) {
       console.log(error);
