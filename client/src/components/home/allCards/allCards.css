@@ -1,13 +1,32 @@
 .cardList {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.loadingDog {
+  background-image: url("../../../../public/loadingDog.gif");
+  height: 30vh;
+  width: 30vh;
+  background-size: cover;
+  background-position: bottom;
+}
+
+.whiteBackground {
+  height: 70vh;
+  width: 200vh;
+  background-size: cover;
+  background-position: bottom;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
-    .cardList {
-      flex-direction: column;
+  .cardList {
+    flex-direction: column;
   }
-  }
+}

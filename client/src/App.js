@@ -6,6 +6,7 @@ import Detail from "./components/detail/Detail";
 import  Form from "./components/form/Form"
 import axios from "axios";
 axios.defaults.baseURL = 'https://pi-dogs-production-f2db.up.railway.app/' ;
+// axios.defaults.baseURL = 'httpp://localhost:3001/' ;
 
 function App() {
   return (

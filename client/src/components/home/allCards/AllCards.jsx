@@ -24,42 +24,55 @@ export default function AllCards() {
   }, [dispatch]);
 
   const handleBack = () => {
-    currentPage > 1 && (setCurrentPage(currentPage - 1))
-  }
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+  };
 
-  
   const handleNext = () => {
-    setCurrentPage(currentPage + 1)
-  }
+    setCurrentPage(currentPage + 1);
+  };
 
-  return (
-    <>
-      <button className="breedButton" onClick={handleBack}>Back</button>
-      <button className="breedButton" onClick={handleNext}>Next</button>
-      <Pages
-        DogsPerPage={dogsPerPage}
-        allDogs={allDogs.length}
-        paginado={paginado}
-      />
-      <div className="cardList ">
-        {allDogs.length > 0 ? (
-          currentDogs.map((e) => (
-            <Link key={e.id} to={`/dogs/${e.id}`}>
-              <Card
-                id={e.id}
-                name={e.name}
-                imageDog={e.image}
-                temperament={e.temperament}
-                minWeight={e.weight_min}
-                maxWeight={e.weight_max}
-                origin={e.origin}
-              />
-            </Link>
-          ))
-        ) : (
-          <h2>No hay nada</h2>
-        )}
+  if (allDogs.length > 0) {
+    return (
+      <>
+        <button className="breedButton" onClick={handleBack}>
+          Back
+        </button>
+        <button className="breedButton" onClick={handleNext}>
+          Next
+        </button>
+        <Pages
+          DogsPerPage={dogsPerPage}
+          allDogs={allDogs.length}
+          paginado={paginado}
+        />
+        <div className="cardList ">
+          {allDogs.length > 0 ? (
+            currentDogs.map((e) => (
+              <Link key={e.id} to={`/dogs/${e.id}`}>
+                <Card
+                  id={e.id}
+                  name={e.name}
+                  imageDog={e.image}
+                  temperament={e.temperament}
+                  minWeight={e.weight_min}
+                  maxWeight={e.weight_max}
+                  origin={e.origin}
+                />
+              </Link>
+            ))
+          ) : (
+            <div className="whiteBackground">
+              <div className="loadingDog"></div>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div className="whiteBackground">
+        <div className="loadingDog"></div>
       </div>
-    </>
-  );
+    );
+  }
 }
